@@ -1,0 +1,101 @@
+.countries__table {
+  display: grid;
+  grid-template-columns: 30% 25% 20% repeat(2, 1fr) 56px;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+  .countries__table_headTitle {
+    padding: 20px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #d7dbe0;
+    text-transform: uppercase;
+
+    &:first-child {
+      padding-left: 10px;
+    }
+  }
+
+  .countries__table_item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #d7dbe0;
+    height: 50px;
+
+    &.countries__table_firstItem {
+      padding-left: 10px;
+      font-weight: 600;
+    }
+
+    &.countries__table_lastItem {
+      justify-content: center;
+      border-left: 1px solid #d7dbe0;
+      border-right: 1px solid #d7dbe0;
+    }
+
+    &:nth-last-child(1),
+    &:nth-last-child(2),
+    &:nth-last-child(3),
+    &:nth-last-child(4),
+    &:nth-last-child(5),
+    &:nth-last-child(6) {
+      border-bottom: unset;
+    }
+
+    .countries__table_flag {
+      height: 40px;
+      width: 50px;
+      img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .countries__table_close {
+      width: 35px;
+      height: 35px;
+      background-color: #d7dbe0;
+      border-radius: 50%;
+      opacity: 0.3;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        height: 20px;
+        width: 3px;
+        background-color: black;
+        transform: rotate(45deg);
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        height: 20px;
+        width: 3px;
+        background-color: black;
+        transform: rotate(-45deg) scale(-1, 1);
+      }
+    }
+  }
+}
+
+.countries__empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: 600;
+}

@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { CountriesTable } from "./components/countries-table";
+import { USED_API } from "./constants/usedApi";
+import { FilterTools } from "./components/filter-tools";
+import { useCustomStore } from "./store/Store";
 
-function App() {
+const App = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  //Throw to Error Boundery component.
+  if (error) throw error;
+
+  const { setData, correctData } = useCustomStore();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch(USED_API);
+        if (!response.ok) throw new Error("Response invalid");
+        const data = await response.json();
+        setData(data.slice(0, 40));
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+    // eslint-disable-next-line
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <FilterTools />
+      {loading ? (
+        <div className="loading">Loading...</div>
+      ) : (
+        <CountriesTable data={correctData} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
